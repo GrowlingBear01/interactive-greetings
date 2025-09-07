@@ -14,9 +14,9 @@ Full-Stack UI: All HTML, CSS, and JavaScript are contained within single files f
 
 How to Run
 Clone the repository:
-
+```
 git clone [https://github.com/GrowlingBear01/interactive-greetings](https://github.com/GrowlingBear01/interactive-greetings)
-
+```
 Open the file:
 Simply open the index.html file in any web browser to view the greeting card.
 
