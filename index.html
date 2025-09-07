@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hey ______! 💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <body>
+  <div id="start-overlay">
+    <div class="start-box">
+      <p>A little something for you, ______</p>
+      <button id="start-btn">Click to Begin 🌸</button>
+    </div>
+  </div>
+
+  
+
+  <!-- 🌸 Background Petals -->
+  <div class="tenor-container">
+    <div class="tenor-gif-embed" data-postid="26628738" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+      <a href="https://tenor.com/view/flowers-petals-pink-sakura-gif-26628738">Flowers Petals Sticker</a> from 
+      <a href="https://tenor.com/search/flowers-stickers">Flowers Stickers</a>
+    </div>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+  </div>
+
+  <!-- 🌈 Wrapper: Holds all scenes -->
+  <div id="wrapper">
+
+    <!-- 💜 Scene 1 -->
+    <div class="container" id="scene1">
+      <img src="assets/hello-kitty.png" class="kitty fade-in" />
+      <div class="intro-text fade-in">
+        <span class="typing" id="typingText"></span>
+      </div>
+      <button id="nextBtn1" class="scroll-btn hidden">Scroll for a little more magic 🐾</button>
+    </div>
+
+    <!-- 🌼 Scene 2 -->
+    <section class="scene" id="scene2">
+       <div id="sparkle-container"></div> <div class="scene2-messages-container"></div>
+    <div class="scene2-messages-container">
+        <p class="scene2-line" id="line1"></p>
+        <p class="scene2-line" id="line2"></p>
+        <p class="scene2-line" id="line3"></p>
+    </div>
+    <span class="flying-emoji" id="emoji-teddy">🧸</span>
+    <span class="flying-emoji" id="emoji-strawberry">🍓</span>
+    <span class="flying-emoji" id="emoji-crown">👑</span>
+    <span class="flying-emoji" id="emoji-sparkles">✨</span>
+
+    <div class="cat-sticker hidden" id="scene2Gif">
+        <div class="tenor-gif-embed" data-postid="1290677219103118184" data-share-method="host" data-aspect-ratio="1.33155" data-width="100%">
+            <a href="https://tenor.com/view/hello-kitty-hello-kitty-maromba-maromba-bombada-gif-1290677219103118184">Hello Kitty Hello Kitty Maromba Meme</a>
+            from <a href="https://tenor.com/search/hello+kitty-memes">Hello Kitty Memes</a>
+        </div>
+    </div>
+    <button id="nextBtn2" class="scroll-btn hidden">Next ✨</button>
+</section>
+
+    <!-- 💫 Scene 3: Support & Appreciation -->
+<div class="container" id="scene3">
+  <div class="scene3-content">
+    <p class="scene3-message">
+      <span id="typingText3"></span>
+    </p>
+
+    <div class="heart-sticker">
+      <div class="tenor-gif-embed" data-postid="17222725642536680270" data-share-method="host" data-aspect-ratio="1.19712" data-width="100%">
+        <a href="https://tenor.com/view/kawaii-uwu-sweet-cute-many-gif-17222725642536680270">Kawaii Uwu GIF</a>
+        from <a href="https://tenor.com/search/kawaii-gifs">Kawaii GIFs</a>
+      </div>
+    </div>
+
+    <button class="scroll-btn hidden" id="toScene4">Keep Reading 💌</button>
+  </div>
+</div>
+
+
+    <!-- 🌸 Scene 4: Praise & Fun -->
+<div class="container" id="scene4">
+  <div class="scene4-message">
+    <span id="typingText4"></span>
+  </div>
+
+  <div class="spotlight">
+    <div class="spotlight-words">
+      <span class="word">Peace</span>
+      <span class="word">Power</span>
+      <span class="word">Soft</span>
+      <span class="word">Kind</span>
+      <span class="word">Strong</span>
+    </div>
+  </div>
+
+  <div class="sticker-container">
+    <div class="scene4-sticker">
+      <img id="scene4Sticker" src="assets/kitty-bottle.png" alt="A photo for" />
+
+      <div id="cloudyBox" class="cloudy-box">
+       <div class="cloudy-box-inner">
+    A cozy little storm, captured. ☁️⚡
+  </div>
+      </div>
+    </div>
+    <button id="toScene5" class="scroll-btn hidden">Next 🌸</button>
+  </div>
+</div>
+
+<!-- 🎉 Scene 5: Awesomeness Scan -->
+<!-- 🎉 Scene 5: Awesomeness Scan -->
+<div class="container" id="scene5">
+  <!-- Petal Storm Container -->
+<div id="petal-container"></div>
+
+  <!-- Pre-Scan Prompt -->
+  <div id="preScanPrompt" class="fade-in">
+    <h2>🪄 Are you ready for your Awesomeness Check?</h2>
+    <button id="startScanBtn" class="scroll-btn">Yes, start the scan 💜</button>
+  </div>
+  
+
+  <!-- Scan Box -->
+  <div class="scan-container hidden">
+    <div class="scan-title">🩷 Running ______'s Awesomeness Scan...</div>
+    <div class="scan-log" id="scanLog"></div>
+    <div class="scan-bar">
+      <div class="scan-progress" id="scanProgress"></div>
+    </div>
+    <div class="certificate hidden" id="certificate">
+      <h2>🎖 100% Scan Complete</h2>
+    </div>
+    <div id="scanFinalContent"></div>
+    <!-- 👩‍🎓 Video Popup -->
+    <div id="kittyVideoPopup" class="hidden">
+      <video id="kittyVideo" src="assets/Hello_Kitty_C.mp4" preload="auto" playsinline
+       ></video>
+    </div>
+    <div class="final-message hidden" id="finalMessage">
+      <p>______ is officially Certified Awesome™</p>
+      <p>💜 Soft, rare, and impossible to forget — just like you.</p>
+      <button class="scroll-btn" id="toScene6">Next 🌸</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 🌙 Scene 6: Final Message -->
+<div class="container" id="scene6">
+  <div class="scene6-bg-video">
+    <video id="kittyGoodbyeVideo" class="hidden" src="assets/Video_Background_Changed_With_Image.mp4" playsinline></video>
+  </div>
+  <div class="scene6-content">
+    <div class="scene6-main-message">
+      <p class="scene6-message typing" id="typingText6"></p>
+    </div>
+    <div class="scene6-thankyou">
+      <p id="finalThankYouMessage" class="hidden">💜 Thank you for everything, ______.</p>
+    </div>
+    <div class="scene6-btn-row">
+    <button class="scroll-btn hidden" id="replayBtn" onclick="scrollToTop()">Replay From Beginning 💫</button>
+</div>
+  </div>
+</div>
+
+
+
+
+  
+
+  <!-- 🎵 Music + Scripts -->
+  <audio id="bgMusic" src="assets/music.mp3" loop autoplay></audio>
+  <audio id="kittyChime" src="assets/kitty.m4a" preload="auto"></audio>
+  <script src="script.js"></script>
+
+
+</body>
+</html>

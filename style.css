@@ -1,0 +1,1608 @@
+body {
+  margin: 0;
+  font-family: 'Baloo 2', cursive;
+  background: #f8ecff url('assets/lavender-bg.jpg') no-repeat center center;
+  background-size: cover;
+  overflow: hidden; /* 🚫 Prevent scroll */
+}
+
+/* The full wrapper for scenes */
+#wrapper {
+  height: 100vh;
+  width: 100%;
+  transition: transform 1s ease-in-out;
+}
+
+/* Every scene is 100% screen height */
+.container {
+  height: 100vh;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.scene {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+/* 🌸 Tenor GIF container behind everything */
+.tenor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* 💬 Scene 1 Typing Message */
+.intro-text {
+  font-size: 2.5rem;
+  color: #6d44a1;
+  margin-top: 20px;
+  z-index: 2;
+}
+.typing {
+  white-space: pre-wrap;
+}
+
+/* 🎀 Hello Kitty float */
+.kitty {
+  width: 120px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  animation: float 4s ease-in-out infinite;
+  z-index: 2;
+  transition: transform 0.3s ease-in-out;
+}
+.kitty.interactive {
+    transform: scale(1.2) rotate(-10deg); /* Make it bigger and tilt it */
+}
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  animation: fade 2s ease-in forwards;
+  animation-delay: 1s;
+}
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+.intro-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-15px);
+    animation: fadeInWord 0.6s ease-out forwards;
+}
+.intro-line {
+  /* This ensures each line of text starts on a new line */
+  display: block;
+  min-height: 1.2em; /* Prevents lines from collapsing if they are empty */
+}
+
+/* Make sure your ripple CSS looks like this final version */
+/* --- Replace your old ripple CSS with this final, more visible version --- */
+
+.kitty-ripple {
+  position: fixed;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+
+  /* --- STRONGER, MORE VIBRANT STYLE --- */
+  background-color: rgba(200, 160, 255, 0.35); /* More opaque background */
+  border: 4px solid rgba(232, 180, 255, 1);     /* Thicker, fully opaque border */
+  box-shadow: 0 0 20px 8px rgba(232, 180, 255, 0.7), /* Stronger glow */
+              inset 0 0 15px rgba(255, 255, 255, 0.6);   /* Brighter inner glow */
+
+  width: 80px;
+  height: 80px;
+  animation: ripple-pulse 15s ease-out forwards;
+  animation-play-state: paused; 
+}
+
+@keyframes ripple-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  70% {
+    /* The wave now stays at full opacity for 70% of its life */
+    opacity: 0.9; 
+  }
+  80% {
+    opacity: 0.8;
+  }
+  90% {
+    /* The wave starts to fade out */
+    transform: translate(-50%, -50%) scale(var(--ripple-scale, 2));
+    opacity: 0.5;
+  }
+  100% {
+    /* It only fades out in the last 20% of the animation */
+    transform: translate(-50%, -50%) scale(var(--ripple-scale, 4));
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInWord {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style for the special emphasis words */
+.intro-word.emphasis {
+    color: #a968e8; /* A brighter purple */
+    font-weight: bold;
+    animation: fadeInWord 0.6s ease-out forwards, pop-emphasis 0.5s ease-out 0.5s;
+}
+
+@keyframes pop-emphasis {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Scene 2 message */
+/* Cat sticker */
+.cat-sticker {
+  width: 200px;
+  margin: 2rem auto 0; /* Adds more space above the sticker */
+  z-index: 2;
+  animation: pulse-strong 2s infinite ease-in-out; /* Add a new pulsing animation */
+}
+
+/* Define the pulse animation */
+@keyframes pulse-strong {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); } /* A more dramatic scale change */
+  100% { transform: scale(1); }
+}
+
+/* Animation for the entire text container */
+@keyframes soft-breathe {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* --- Add these styles for the new hint bubble --- */
+
+.kitty-hint-bubble {
+  position: fixed;
+  background: white;
+  color: #6d44a1;
+  padding: 0.8rem 1.2rem;
+  border-radius: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  z-index: 10000; /* On top of everything */
+  font-size: 0.9rem;
+  font-weight: 500;
+  pointer-events: none; /* So it doesn't block the mouse */
+  transform: translateX(-50%); /* This helps center the bubble */
+  opacity: 0;
+  animation: pop-in-hint 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* The little pointer for the bubble */
+.kitty-hint-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+}
+
+@keyframes pop-in-hint {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.scene2-messages-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    /* Add the soft-breathe animation */
+    animation: soft-breathe 4s infinite ease-in-out;
+}
+
+/* Optional: Make the message text box more prominent */
+.scene2-message {
+  font-size: 2.5rem;
+  color: #6d44a1;
+  margin-top: 20px;
+  z-index: 2;
+  padding: 1rem 2rem;
+  
+}
+/* Animation for sentences coming from the left */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation for sentences coming from the right */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation for the final line coming from the bottom */
+@keyframes slideInBottom {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Base style for all animated message lines */
+.scene2-line {
+    font-size: 2.5rem;
+    color: #6d44a1;
+    margin-top: 20px;
+    z-index: 2;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    position: relative; /* Needed for absolute positioning of pseudo-element */
+}
+
+/* Animation for the GIF to pop in */
+@keyframes popInGif {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/* New styles for the flying emojis */
+.flying-emoji {
+    position: absolute;
+    font-size: 2.5rem;
+    opacity: 0;
+    transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s ease-out;
+    z-index: 5; /* Ensure emojis fly over everything else */
+}
+
+/* Style for the placeholder that reserves space in the text */
+.emoji-placeholder {
+    display: inline-block;
+    width: 2.5rem; /* Match the size of the emoji */
+    height: 2.5rem;
+    vertical-align: middle;
+}
+
+/* Make sure the text lines can contain absolutely positioned elements */
+/* Keyframes for the floating animation */
+/* Animation for emojis to randomly roam the screen */
+@keyframes roam-around {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(50px, -30px) rotate(15deg); }
+    40% { transform: translate(-20px, 40px) rotate(-10deg); }
+    60% { transform: translate(-40px, -10px) rotate(5deg); }
+    80% { transform: translate(10px, 30px) rotate(20deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes emoji-pop-in {
+    0% { opacity: 0; transform: scale(0); }
+    80% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* New CSS to handle the initial bounce-in and continuous roaming */
+.flying-emoji.roaming {
+    animation: emoji-pop-in 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards,
+               roam-around 5s 0.8s infinite ease-in-out;
+}
+
+/* This class will trigger the smooth settling animation */
+.flying-emoji.settle-down {
+    animation: none; /* Stop the roaming animation */
+    /* top, left, and transform will be set by JS and transition smoothly */
+}
+
+.flying-emoji {
+    position: absolute;
+    font-size: 2.5rem;
+    opacity: 0;
+    transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                opacity 0.5s ease-out,
+                top 1s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                left 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+                font-size: 0.3s ease-in-out;
+    z-index: 5;
+} 
+/* --- START: Replace all old sparkle CSS with this block --- */
+
+/* --- Replace all old sparkle CSS with this --- */
+#sparkle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 6; 
+}
+
+.sparkle {
+    position: absolute;
+    /* Bright yellow core with a soft white glow */
+    background-color: #ffde7d; 
+    box-shadow: 0 0 10px 2px #fff, 0 0 20px 5px #ffde7d;
+    border-radius: 50%;
+    opacity: 0; /* Initial state */
+}
+/* --- Add these new rules for the flash --- */
+.flash {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    /* A soft white radial gradient */
+    background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 60%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 11; /* Position it on top of the sparkles */
+    transform: translate(-50%, -50%); /* Center it perfectly on the burst point */
+    opacity: 0;
+    animation: flash-bang 0.4s ease-out forwards;
+}
+
+@keyframes flash-bang {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(0.3); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
+}
+
+/* --- END: Replacement block --- */
+/* Add a hover effect to emojis ONLY when they are roaming */
+/* Replace the old hover rule with this one */
+.flying-emoji.roaming:hover {
+    animation-play-state: paused; /* This pauses the roaming animation */
+    font-size: 4rem;              /* This makes the emoji bigger */
+    cursor: pointer;
+    z-index: 100;                 /* Bring it to the very front */
+}
+
+
+
+/* 🌈 Scroll/Next Button */
+.scroll-btn {
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background-color: #e8b4d5;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background-color 0.3s;
+}
+.scroll-btn:hover {
+  background-color: #f3c0e0;
+}
+.hidden {
+  display: none;
+}
+
+/* 🌼 Scene 3 Styles */
+#scene3 {
+  height: 100vh;
+  background: #f8ecff url('assets/lavender-bg.jpg') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+   position: relative; /* Needed for absolute positioning of pseudo-element */
+    overflow: hidden;
+}
+#scene3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+    background-size: 20px 20px;
+    pointer-events: none;
+    animation: slow-float 20s infinite linear;
+    z-index: 0;
+}
+
+@keyframes slow-float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-100vh); }
+}
+
+
+.scene3-content {
+    max-width: 800px;
+    width: 90%; /* Use a percentage for better responsiveness */
+    padding: 3rem; /* Increase padding for more space */
+    /* Semi-transparent white background */
+     /* Adds a soft, frosted-glass effect */
+     /* More subtle, deeper shadow */
+     
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem; /* Adds space between the message and the GIF */
+    animation: fadeInSlideUp 1s ease-in-out forwards; /* Add a new animation */
+}
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.scene3-message {
+    font-size: 2rem; /* Slightly smaller for a more intimate feel */
+    line-height: 1.8; /* Improve readability */
+    color: #5d3a8e; /* Use a darker purple for better contrast */
+    text-shadow: none; /* Remove any text shadows for a cleaner look */
+    font-weight: 500;
+}
+
+.heart-sticker {
+    width: 120px; /* Make the sticker a bit smaller */
+    max-width: 80%;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+/* Add a hover effect for a more interactive feel */
+.heart-sticker:hover {
+    transform: scale(1.1);
+}
+
+/* 🌸 Scene 4 Styled Like Scene 1/2 */
+/* --- Final Scene 4 Styles --- */
+
+/* The main container */
+/* --- Final Scene 4 Styles (with Dimming Effect) --- */
+
+/* --- Final Scene 4 Styles (with Dimming Effect and Original Text Color) --- */
+
+
+/* New keyframe animation for the button */
+/* --- New animation for the button --- */
+@keyframes popInAndStay {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* --- The button's initial state is hidden --- */
+#toScene4 {
+    opacity: 0;
+    transform: scale(0.5);
+    /* No animation on load */
+    animation: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* --- This class makes the button appear and stay --- */
+#toScene4.is-visible {
+    animation: popInAndStay 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+/* Keep the general .hidden class for other elements */
+.hidden {
+    display: none;
+}
+
+/* The `hidden` class can be removed, as the new CSS handles visibility. */
+
+
+
+ #scene4 {
+  background: #f8ecff url('assets/lavender-bg.jpg') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  justify-content: space-evenly;
+  
+ }
+
+ /* The dark overlay for dimming */
+ #scene4::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 20, 75, 0.6);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 2s ease-out;
+ }
+
+ #scene4.spotlight-active::before {
+  opacity: 1;
+ }
+
+ /* The spotlight beam */
+ .spotlight {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) perspective(500px) rotateX(25deg);
+  transform-origin: top;
+  /* width: 600px; */
+  height: 120%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 65%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 2s ease-out;
+ }
+
+ #scene4.spotlight-active .spotlight {
+  opacity: 1;
+  animation: spotlight-shimmer 4s infinite ease-in-out;
+ }
+
+ @keyframes spotlight-shimmer {
+  0% {
+   opacity: 0.8;
+  }
+
+  50% {
+   opacity: 1;
+  }
+
+  100% {
+   opacity: 0.8;
+  }
+ }
+
+ /* The main compliment text - MAINTAINING ORIGINAL COLOR */
+ .scene4-message {
+  font-size: 2.4rem;
+  color: #6d44a1;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
+  position: relative;
+  z-index: 3;
+ }
+
+ /* The GIF sticker */
+ .scene4-sticker {
+  width: 220px;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 3;
+ }
+ /* --- Add these styles for the Scene 4 Sticker Image --- */
+
+#scene4Sticker {
+  max-width: 100%;
+  height: auto;
+  max-height: 40vh;
+  
+  
+  /* Make the image start invisible */
+  opacity: 0;
+  transform: scale(0.8);
+  
+  /* Define the fade-in animation */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scene4-sticker {
+  /* This is important for positioning the box */
+  position: relative; 
+}
+
+/* --- Add these new animation keyframes to your style.css --- */
+
+/* Defines the "float down" motion for the box */
+/* --- Animation Keyframes (Updated for Looping) --- */
+
+/* Keyframes for the box floating down (no change) */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Keyframes for the shimmer to loop with a pause */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-20deg); /* Start off-screen */
+  }
+  40% {
+    transform: translateX(200%) skewX(-20deg); /* Glide across */
+  }
+  100% {
+    transform: translateX(200%) skewX(-20deg); /* Stay off-screen to create a pause */
+  }
+}
+
+
+/* --- Updated Cloudy Box Styles (for Pointer & Looping Shimmer) --- */
+
+/* The main container for positioning and the pointer */
+.cloudy-box {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 15px;
+  
+  /* Animation setup */
+  opacity: 0;
+  /* NOTE: overflow: hidden is REMOVED from here to fix the pointer */
+}
+
+/* The pointer is attached to the main container and is now visible */
+.cloudy-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; 
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid rgba(255, 255, 255, 0.85);
+}
+
+/* The new inner container for the background, text, and shimmer */
+/* --- Add these new keyframes for the morphing animation --- */
+@keyframes morphCloud {
+  0% {
+    border-radius: 60% 40% 30% 70% / 70% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 70% 30% 70% 40%;
+  }
+}
+
+
+/* --- Replace your .cloudy-box-inner with this updated version --- */
+.cloudy-box-inner {
+  position: relative;
+  backdrop-filter: blur(8px);
+  padding: 2rem 2.5rem; /* Increased padding to fit text inside the new shape */
+  box-shadow: 0 8px 32px 0 rgba(109, 68, 161, 0.2);
+  color: #5d3a8e;
+  overflow: hidden;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9); /* A solid, cloudy base */
+  transition: border-radius 1s ease-in-out; /* For smooth transitions */
+
+  /* This is the magic line that creates the initial cloud shape */
+  border-radius: 60% 40% 30% 70% / 70% 30% 70% 40%;
+
+  /* This applies the gentle, continuous morphing animation */
+  animation: morphCloud 12s ease-in-out infinite;
+}
+
+/* Triggers the float-in animation */
+.cloudy-box.visible {
+  animation: floatIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+}
+
+/* The shimmer is now attached to the inner box and LOOPS! */
+.cloudy-box.visible .cloudy-box-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  
+  /* The shimmer now loops infinitely every 4 seconds */
+  animation: shimmer 4s ease-in-out 1.5s infinite;
+}
+/* This class makes the image appear */
+#scene4Sticker.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+ /* Styles for the floating words */
+ .spotlight-words {
+  position: relative;
+  width: 100%;
+  height: 100%;
+ }
+
+ /* New container for the sticker and button - CORRECTED */
+.sticker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-35vh); 
+  position: relative; /* This is important */
+  z-index: 3; /* This brings the container (and button) to the front */
+}
+
+#scene4Sticker:hover {
+  transform: scale(1.05); /* Makes the image slightly larger */
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+#toScene5 {
+  /* Start invisible and slightly down */
+  opacity: 0;
+  transform: translateY(20px);
+  /* Smooth animation for the fade and slide */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+ .word {
+  position: absolute;
+  /* Brighter color for contrast on the dimmed background */
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(255, 220, 255, 0.9);
+  opacity: 0;
+  z-index: 4;
+ }
+
+ #scene4.spotlight-active .word {
+  animation-name: drift-down;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+ }
+
+ @keyframes drift-down {
+  0% {
+   transform: translateY(-50px);
+   opacity: 0;
+  }
+
+  20% {
+   opacity: 1;
+  }
+
+  90% {
+   opacity: 1;
+  }
+
+  100% {
+   transform: translateY(70vh);
+   opacity: 0;
+  }
+ }
+
+ #scene4.spotlight-active .word:nth-child(1) {
+  left: 20%;
+  animation-duration: 12s;
+  animation-delay: 0s;
+ }
+
+ #scene4.spotlight-active .word:nth-child(2) {
+  left: 65%;
+  font-size: 1.2rem;
+  animation-duration: 15s;
+  animation-delay: 3s;
+ }
+
+ #scene4.spotlight-active .word:nth-child(3) {
+  left: 50%;
+  font-size: 1.6rem;
+  animation-duration: 10s;
+  animation-delay: 1s;
+ }
+
+ #scene4.spotlight-active .word:nth-child(4) {
+  left: 75%;
+  animation-duration: 14s;
+  animation-delay: 5s;
+ }
+
+ #scene4.spotlight-active .word:nth-child(5) {
+  left: 30%;
+  font-size: 1.3rem;
+  animation-duration: 11s;
+  animation-delay: 7s;
+ }
+
+
+/* 🎉 Scene 5: Awesomeness Scan */
+#scene5 {
+ height: 100vh;
+  background: #f8ecff url('assets/lavender-bg.jpg') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.scan-container {
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(109, 68, 161, 0.15);
+  overflow: visible;
+  border: 4px solid transparent;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(45deg, #ffd5a1, #e8b4d5, #ffd5a1);
+  animation: border-pan 8s linear infinite;
+}
+
+@keyframes border-pan {
+  0% { border-image-source: linear-gradient(45deg, #ffd5a1, #e8b4d5, #ffd5a1); }
+  25% { border-image-source: linear-gradient(135deg, #ffd5a1, #e8b4d5, #ffd5a1); }
+  50% { border-image-source: linear-gradient(225deg, #ffd5a1, #e8b4d5, #ffd5a1); }
+  75% { border-image-source: linear-gradient(315deg, #ffd5a1, #e8b4d5, #ffd5a1); }
+  100% { border-image-source: linear-gradient(405deg, #ffd5a1, #e8b4d5, #ffd5a1); }
+}
+
+.scan-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #6d44a1;
+  font-weight: bold;
+  
+
+}
+
+.scan-log {
+  font-family: monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: left;
+  white-space: pre-wrap;
+  height: 180px;
+  overflow-y: visible;
+  color: #6d44a1;
+  margin-bottom: 1rem;
+  max-height: 240px; 
+
+}
+
+.scan-bar {
+  width: 100%;
+  height: 20px;
+  background: #e0c9f1;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.scan-progress {
+  height: 100%;
+  width: 0%;
+  background: #d382e8;
+  transition: width 0.3s;
+}
+.scan-line {
+  opacity: 0;
+  animation: fadeInLine 0.5s ease forwards;
+}
+@keyframes fadeInLine {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#preScanPrompt {
+  text-align: center;
+  color: #6d44a1;
+  font-size: 1.3rem;
+  max-width: 600px;
+  padding: 2rem;
+}
+.pre-scan-text {
+  margin-bottom: 1.5rem;
+  white-space: pre-wrap;
+}
+.scan-line {
+  font-family: monospace;
+  font-size: 1rem;
+  color: #6d44a1;
+  margin: 4px 0;
+}
+
+/* Add this new keyframe for the progress bar */
+@keyframes fill-progress-bar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* We can reuse this from your existing fadeOut animation */
+.fade-out-slow {
+    animation: fadeOut 1s ease forwards;
+}
+
+
+
+
+.certificate {
+  font-size: 1.3rem;
+  color: #6d44a1;
+  margin-top: 1rem;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+#scene6 {
+  width: 100%;
+  background: #f8ecff url('assets/lavender-bg.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.scene6-message {
+  font-size: 2rem;
+  line-height: 1.6;
+  color: #6d44a1;
+  white-space: pre-wrap;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 100%;
+  
+}
+.kitty-hug-sticker {
+  width: 180px;
+  margin-bottom: 2rem;
+}
+/* 🎞 Video popup */
+/* 🌸 Video Popup Styling */
+#kittyVideoPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn1 1s ease-in forwards;
+}
+
+#kittyVideoPopup video {
+  width: 98vw;
+  max-width: 700px;
+  height: auto;
+  border-radius: 16px;
+  outline: none;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  transform: scale(1.05);
+  opacity: 0;
+  animation: videoAppear 0.5s ease-in forwards;
+}
+/* 🌟 Appear animation */
+@keyframes videoAppear {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 🔄 Fade In + Out Utility */
+@keyframes fadeIn1 {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.fade-out {
+  animation: fadeOut 1s ease forwards;
+}
+
+/* 🌸 Individual Petal */
+#petal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.petal {
+ position: absolute;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  background-image: url('assets/petal.png'); /* your pink petal image */
+  background-size: cover;
+  pointer-events: none;
+  z-index: 999;
+  animation: fall linear forwards;
+  opacity: 0.9;
+  transform: rotateZ(0deg);
+  will-change: transform, top;
+}
+
+@keyframes fall {
+  from {
+    top: -30px; /* Start above the screen */
+    transform: rotate(0deg) translateX(0);
+    opacity: 1;
+  }
+  to {
+    top: calc(100vh - 40px); /* Land and rest at the bottom */
+    /* Add a slight horizontal drift for a more natural fall */
+    transform: rotate(720deg) translateX(calc(var(--drift, 0) * 30px));
+    opacity: 1; /* Stay visible at the bottom */
+  }
+}
+
+
+
+.petal-label {
+  position: absolute;
+  left: 50%;
+  top: -1.2em;
+  transform: translateX(-50%);
+  font-size: 0.9em;
+  color: #6d44a1;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 0 6px;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: inherit;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+/* Move text to left */
+.scene6-message.extreme-left {
+  transform: translateX(-40%);
+  text-align: left !important;
+   transition: transform 0.7s cubic-bezier(.77,0,.18,1), text-align 0.7s cubic-bezier(.77,0,.18,1);
+}
+/* Shake effect for each word */
+.fall-word.shake {
+  animation: shake-random 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Fall down and stay at bottom */
+.fall-word.drop {
+  animation: fall-to-bottom 1.2s cubic-bezier(.36,.07,.19,.97) forwards;
+}
+
+#scanFinalContent {
+  padding-top: 1rem;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.8s 0.5s ease-out, transform 0.8s 0.5s ease-out;
+}
+
+#scanFinalContent.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#scanFinalContent p {
+  margin: 0.5em 0;
+  color: #5d3a8e;
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+#scanFinalContent p:first-child {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* --- Add these new styles for the certificate design --- */
+
+#scanFinalContent .seal {
+  width: 70px;
+  height: 70px;
+  background-color: #f3c0e0; /* A soft pink seal color */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem; /* For the emoji inside */
+  margin: 0 auto 1rem;
+  color: white;
+  border: 4px solid white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+#scanFinalContent .seal-line {
+  height: 2px;
+  background-image: linear-gradient(to right, transparent, #eec8a0, transparent);
+  border: none;
+  margin: 1rem auto;
+}
+
+#scanFinalContent .recipient-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #c79d4a, #ffe08a, #c79d4a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding: 0.2em 0;
+  margin: 0.5rem 0;
+}
+
+#scanFinalContent .tagline {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #5d3a8e;
+  margin: 0.5rem 0 1rem 0;
+}
+
+/* Add some space above the button */
+#scanFinalContent .scroll-btn {
+  margin-top: 1.5rem;
+}
+
+/* --- Add/Update these styles in your style.css --- */
+
+/* Add a pseudo-element to the scan-container for the watermark */
+.scan-container::after {
+  content: '';
+  background-image: url('assets/hello-kitty.png'); /* Uses your existing kitty! */
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05; /* Make it very faint */
+  z-index: 0; /* Place it behind the text */
+}
+
+/* Make sure the content appears above the new watermark */
+#scanFinalContent {
+  position: relative;
+  z-index: 1;
+  /* ... keep the rest of your existing #scanFinalContent styles ... */
+}
+
+
+/* Add an animation to the seal */
+@keyframes pulse-seal {
+  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  50% { transform: scale(1.05); box-shadow: 0 6px 25px rgba(243, 192, 224, 0.4); }
+  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+}
+
+#scanFinalContent .seal {
+  background: linear-gradient(145deg, #ffebb9, #f9d5c2);
+  color: #a968e8; /* Keep the purple emoji for contrast */
+  font-size: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  animation: pulse-seal 3s infinite ease-in-out;
+}
+
+/* Add styles for the new "fine print" details */
+#scanFinalContent .certificate-details {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #c79d4a; /* Golden color */
+  opacity: 0.8;
+}
+
+#scanFinalContent .certificate-details p {
+  margin: 0.3em 0;
+}
+
+
+
+
+
+@keyframes fall-to-bottom {
+  0% { opacity: 1; }
+  100% {
+    transform: translateY(calc(100vh - 120px)); /* Adjust 120px for your header/margin */
+    opacity: 1;
+  }
+}
+
+.fall-word.drop {
+    position: absolute;
+    /* 'left' and 'top' are set by JS */
+    animation: none; /* Stop other animations */
+    transform: none !important; /* IMPORTANT: Clears transforms for a clean drop */
+    transition: none; /* Turn off transitions when dropping to the bottom */
+    width: auto;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+
+.scene6-content {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: fstartlex-;
+  justify-content: center;
+  z-index: 1;
+}
+
+.scene6-main-message {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Ensure enough space for absolute positioning */
+}
+
+.scene6-thankyou {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.scene6-btn-row {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center; /* or center, as you prefer */
+}
+
+.scene6-bg-video {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  
+}
+
+.scene6-bg-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8; /* adjust for desired fade */
+  pointer-events: none;
+}
+
+.scene6-message {
+  font-size: 2rem;
+  line-height: 1.6;
+  color: #6d44a1;
+  white-space: pre-wrap;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  transition: transform 2s cubic-bezier(.77,0,.18,1), text-align 2s cubic-bezier(.77,0,.18,1);
+  transform: translateX(0);
+}
+
+
+
+
+.fall-word {
+    display: inline-block;
+    position: relative;
+    margin-right: 6px;
+    white-space: nowrap;
+    font-size: 1.6rem;
+    color: #6d44a1;
+    opacity: 0;
+    transform: translateY(10px);
+    /* This is the key for the smooth "bunching" effect. */
+    /* It animates changes to position (top, left) and transform over 1 second. */
+    transition: 
+        opacity 0.4s ease-out, 
+        transform 0.4s ease-out, 
+        top 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+        left 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+
+
+/* When exploding or dropping, position absolutely */
+.fall-word.explode,
+.fall-word.drop {
+  position: absolute;
+  z-index: 10;
+}
+
+@keyframes explode {
+    0% {
+        opacity: 1;
+        /* Start from the center */
+        transform: scale(1) translate(-50%, 0) rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        /* Explode to the random position set in the JS */
+        transform: scale(1.2) translate(calc(-50% + var(--explode-x, 0px)), var(--explode-y, 0px)) rotate(var(--explode-rot, 0deg));
+    }
+}
+
+.fall-word.explode {
+  animation: explode 0.7s cubic-bezier(.36,.07,.19,.97) forwards;
+}
+
+
+/* This rule styles the final "Thank You" message */
+/* --- Final Elements Styling & Positioning --- */
+
+/* This rule defines the final, VISIBLE state of the message */
+#finalThankYouMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200; /* Very high z-index to ensure it's on top */
+  color: #5d3a8e;
+  font-size: 1.8em;
+  font-weight: 600;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  
+  /* Start transparent and hidden, ready for animation */
+  opacity: 0;
+  visibility: hidden; /* Use visibility for a more robust hidden state */
+  transition: opacity 0.8s ease-out, visibility 0s 0.8s;
+}
+
+/* This rule applies when the .hidden class is NOT present */
+#finalThankYouMessage:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s; /* Ensure there's no delay when appearing */
+    animation: subtleFloat 4s ease-in-out 0.8s infinite;
+}
+
+/* This is the continuous floating animation */
+@keyframes subtleFloat {
+  0% { transform: translate(-50%, -50%) translateY(0px); }
+  50% { transform: translate(-50%, -50%) translateY(-12px); }
+  100% { transform: translate(-50%, -50%) translateY(0px); }
+}
+
+/* This positions the replay button */
+#replayBtn {
+    position: absolute; 
+    z-index: 50;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* --- Styles for the "Click to Begin" Screen --- */
+
+#start-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(248, 236, 255, 0.8); /* A semi-transparent lavender */
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 10001; /* On top of everything */
+  opacity: 1;
+ transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+#start-overlay.hidden {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none; /* Make it unclickable after it's hidden */
+}
+
+#start-overlay .start-box {
+  color: #6d44a1;
+  font-size: 1.5rem;
+}
+.fade-in {
+  opacity: 0; /* The element will start invisible, but with no animation yet */
+}
+body.scene-active .fade-in {
+  animation: fade 2s ease-in forwards;
+  animation-delay: 0.5s; /* Wait a moment for the overlay to disappear */
+}
+
+
+#start-overlay #start-btn {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-family: 'Baloo 2', cursive;
+  background-color: #e8b4d5;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+#start-overlay #start-btn:hover {
+  transform: scale(1.05);
+}
+
+/* --- Add these styles for the pop-up kitty GIF --- */
+
+/* --- Replace your old pop-up kitty styles with this --- */
+
+/* --- Replace your old pop-up kitty styles with this block --- */
+
+/* --- Replace all existing pop-up CSS with this block --- */
+
+/* A generic class for styles shared by both GIFs and Videos */
+.popup-media {
+  position: fixed;
+  width: 150px;
+  height: auto;
+  
+  pointer-events: none;
+  opacity: 0; /* Animation starts from invisible */
+}
+
+/* --- Special Animation for the GIF --- */
+.popup-gif {
+  mix-blend-mode: multiply;
+  /* We apply BOTH the fade and drift animations */
+  animation:
+    fade-in-hold-out-15s 15s ease-in-out forwards,
+    gentle-drift 16s ease-in-out infinite;
+}
+
+/* --- Simpler Animation for the Videos --- */
+.popup-video {
+  width: 300px;
+  height: auto;
+  mix-blend-mode: multiply;
+  animation: fade-in-hold-out-15s 15s ease-in-out forwards;
+}
+
+/* Keyframe for visibility (used by both) */
+@keyframes fade-in-hold-out-15s {
+  0% { opacity: 0; }
+  15% { opacity: 1; } /* Fades in over ~1s */
+  85% { opacity: 1; } /* Holds for ~5s */
+  100% { opacity: 0; }/* Fades out over ~1s */
+}
+
+/* Keyframe for the GIF's movement */
+@keyframes gentle-drift {
+  0% { transform: translate(0, 0) rotate(-3deg); }
+  25% { transform: translate(15px, 10px) rotate(3deg); }
+  50% { transform: translate(-10px, -15px) rotate(-2deg); }
+  75% { transform: translate(10px, -10px) rotate(2deg); }
+  100% { transform: translate(0, 0) rotate(-3deg); }
+}
+
+
+
+
+
+
+
+
+
